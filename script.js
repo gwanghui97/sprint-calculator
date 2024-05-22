@@ -8,9 +8,21 @@ const calculatedResult = document.querySelector('.calculator__result'); // calcu
 
 function calculate(n1, operator, n2) {
   let result = 0;
-  // TODO : n1과 n2를 operator에 따라 계산하는 함수를 만드세요.
-  // ex) 입력값이 n1 : '1', operator : '+', n2 : '2' 인 경우, 3이 리턴됩니다.
-  return String(result);
+
+  let first = Number(n1);
+  let second = Number(n2);
+
+  if (operator === "+") {
+    result = first + second;
+  } else if (operator === "-") {
+    result = first - second;
+  } else if (operator === "*") {
+    result = first * second;
+  } else if (operator === "/") {
+    result = first / second;
+  }
+
+  return String((calculatedResult.textContent = result));
 }
 
 buttons.addEventListener('click', function (event) {
@@ -28,10 +40,17 @@ buttons.addEventListener('click', function (event) {
       // 그리고 버튼의 클레스가 number이면
       // 아래 코드가 작동됩니다.
       console.log('숫자 ' + buttonContent + ' 버튼');
+      if (firstOperend.textContent === "0") {
+        firstOperend.textContent = buttonContent;
+        return;
+      }
+
+      secondOperend.textContent = buttonContent;
     }
 
     if (action === 'operator') {
       console.log('연산자 ' + buttonContent + ' 버튼');
+      operator.textContent = buttonContent;
     }
 
     if (action === 'decimal') {
@@ -40,10 +59,22 @@ buttons.addEventListener('click', function (event) {
 
     if (action === 'clear') {
       console.log('초기화 버튼');
+
+      firstOperend.textContent = "0";
+      operator.textContent = "+";
+      secondOperend.textContent = "0";
+      
+      calculatedResult.textContent = "0";
     }
 
-    if (action === 'calculate') {
-      console.log('계산 버튼');
+    if (action === "calculate") {
+      console.log("계산 버튼");
+
+      let first = firstOperend.textContent;
+      let operators = operator.textContent;
+      let second = secondOperend.textContent;
+
+      calculate(first, operators, second);
     }
   }
 });
